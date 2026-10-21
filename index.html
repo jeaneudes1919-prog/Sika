@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0A0E14" />
+    <meta name="description" content="Sika : suivez vos revenus, dépenses, budgets et objectifs d'épargne en FCFA, dans une interface claire et visuelle." />
+    <title>Sika — Suivi de budget personnel</title>
+    <script>
+      try {
+        var t = JSON.parse(localStorage.getItem('sika:theme'));
+        if (t === 'light') document.documentElement.classList.remove('dark');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

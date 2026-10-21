@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: 244 246 250;
+  --card: 255 255 255;
+  --ink: 15 23 42;
+  --muted: 71 85 105;
+  --line: rgb(15 23 42 / 0.1);
+  --mint: 4 120 87;
+  --coral: 225 29 72;
+  --sky: 37 99 235;
+  --amber: 180 83 9;
+  --warn: 194 65 12;
+  --onmint: 255 255 255;
+  --blob-opacity: 0.35;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 10 14 20;
+  --card: 18 25 35;
+  --ink: 241 245 249;
+  --muted: 148 163 184;
+  --line: rgb(255 255 255 / 0.08);
+  --mint: 45 212 160;
+  --coral: 251 113 133;
+  --sky: 96 165 250;
+  --amber: 251 191 36;
+  --warn: 251 146 60;
+  --onmint: 4 19 14;
+  --blob-opacity: 0.22;
+}
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+    font-variant-numeric: tabular-nums;
+    overflow-x: hidden;
+  }
+  h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: -0.03em; line-height: 1.1; }
+  button, a, select, summary, [role='button'] { cursor: pointer; }
+  button:disabled { cursor: not-allowed; opacity: 0.5; }
+  ::selection { background: rgb(var(--mint) / 0.3); }
+  :focus-visible { outline: 2px solid rgb(var(--mint)); outline-offset: 2px; border-radius: 8px; }
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--muted) / 0.4) transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--muted) / 0.35); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+}
+
+@layer components {
+  .glow-card { position: relative; overflow: hidden; }
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--mint) / 0.12), transparent 60%);
+  }
+  .glow-card:hover::before { opacity: 1; }
+  .skeleton { position: relative; overflow: hidden; background: rgb(var(--muted) / 0.15); }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(var(--ink) / 0.08), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+  .aurora-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: var(--blob-opacity);
+    will-change: transform;
+    animation: blob 18s ease-in-out infinite;
+  }
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob, .skeleton::after { animation: none; }
+}
